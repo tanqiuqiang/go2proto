@@ -1,3 +1,3 @@
-module github.com/akkagao/go2proto
+module github.com/tanqiuqiang/go2proto
 
 go 1.13
