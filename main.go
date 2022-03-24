@@ -21,7 +21,7 @@ var (
 	rTags    = regexp.MustCompile(`[\w_]+:"[^"]+"`)
 )
 
-var version = "1.01"
+var version = "1.02"
 
 const streamFlag = "_stream"
 const pingpang = "_pingpang"
@@ -319,7 +319,7 @@ func getProtoType(fieldType string) string {
 		return "int64"
 	case "uint32":
 		return "uint32"
-	case "uint64":
+	case "uint", "uint64":
 		return "uint64"
 	case "bool":
 		return "bool"
