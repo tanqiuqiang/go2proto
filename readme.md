@@ -4,7 +4,7 @@
 
 go2proto 可以很轻松的根据Golang定义的接口生成proto文件，很大程度简化GRPC服务的开发工作。
 
-使用方法：go2proto -f .go
+使用方法：go2proto -f proto/src.go
 
 ## 参考资料：
 https://github.com/akkagao/go2proto
