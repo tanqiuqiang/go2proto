@@ -48,7 +48,6 @@ func start(interfacePath string) {
 		panic(err)
 	}
 
-	target = "."
 	microService := MicroService{PackageName: target}
 	imports := []string{}
 	messages := []Message{}
@@ -97,7 +96,8 @@ func start(interfacePath string) {
 	microService.Imports = imports
 
 	targetFileName := strings.Replace(path.Base(interfacePath), ".go", ".proto", -1)
-	saveToFile(microService, fmt.Sprintf("%v/%v", target, targetFileName))
+	//saveToFile(microService, fmt.Sprintf("%v/%v", target, targetFileName))
+	saveToFile(microService, fmt.Sprintf("%v", targetFileName))
 }
 
 func genPackageName(s string) string {

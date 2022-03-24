@@ -10,6 +10,7 @@ import "{{$v}}";
 import "google/protobuf/timestamp.proto";
 {{end}}
 package {{.PackageName}};
+option go_package = "{{.PackageName}}";
 {{ if .Service.Name}}
 service {{.Service.Name}} {
     {{- range .Service.ServiceFunctions}}
