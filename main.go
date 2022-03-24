@@ -21,15 +21,19 @@ var (
 	rTags    = regexp.MustCompile(`[\w_]+:"[^"]+"`)
 )
 
+var version = "1.01"
+
 const streamFlag = "_stream"
 const pingpang = "_pingpang"
 
 var filePath string
+var printVersion bool
 
 // var dir string
 var target string
 
 func init() {
+	flag.BoolVar(&printVersion, "v", false, "print program version")
 	flag.StringVar(&filePath, "f", "", "source file path")
 	// flag.StringVar(&dir, "d", "", "source file dir path")
 	flag.StringVar(&target, "t", "proto", "proto file target path")
@@ -40,6 +44,12 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	if printVersion {
+		println(version)
+		os.Exit(0)
+	}
+
 	if filePath == "" {
 		flag.Usage()
 		return
