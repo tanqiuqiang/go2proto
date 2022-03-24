@@ -48,4 +48,5 @@ type MessageField struct {
 	FieldName string
 	FieldType string
 	Comment   string
+	Doc       string
 }

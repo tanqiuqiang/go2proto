@@ -27,6 +27,9 @@ service {{.Service.Name}} {
 {{range .Messages}}
 message {{.Name}} {
     {{- range .MessageFields}}
+    {{- if .Doc}} 
+    {{.Doc}}
+    {{- end}}
     {{.FieldType}} {{.FieldName}} = {{.Index}}; {{.Comment}}
     {{- end}}
 }

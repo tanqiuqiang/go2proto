@@ -7,8 +7,10 @@ service User {
     rpc Createuser (Request) returns (Response) {} 
 }
 
-message Request {
+message Request { 
+    // @inject_tag: required:"true" validate:"required"
     string name = 1; 
+    int32 id = 2; 
 }
 
 message Response {

@@ -9,9 +9,16 @@ import (
 	"log"
 	"os"
 	"path"
+	"regexp"
 	"strings"
 	"text/template"
 	"unicode"
+)
+
+var (
+	rComment = regexp.MustCompile(`^//.*?@(?i:gotags?|inject_tags?):\s*(.*)$`)
+	rInject  = regexp.MustCompile("`.+`$")
+	rTags    = regexp.MustCompile(`[\w_]+:"[^"]+"`)
 )
 
 const streamFlag = "_stream"
@@ -128,6 +135,21 @@ func saveToFile(microService MicroService, protoPath string) {
 	}
 }
 
+func tagFromComment(comment string) (tag string) {
+	match := rComment.FindStringSubmatch(comment)
+	if len(match) == 2 {
+		tag = match[1]
+	}
+	return
+}
+
+type textArea struct {
+	Start      int
+	End        int
+	CurrentTag string
+	InjectTag  string
+}
+
 /*
 解析结构体
 */
@@ -141,6 +163,30 @@ func structParser(structName string, structNode *ast.StructType) []MessageField 
 			log.Fatalf("struct %v error,the field can't define like 'name,address string'", structName)
 		}
 		messageField.FieldName = Lcfirst(field.Names[0].Name)
+
+		//----------------------add by tan----------------------------
+		//comments := []*ast.Comment{}
+		if field.Doc != nil {
+			//comments = append(comments, field.Doc.List...)
+			messageField.Doc = field.Doc.List[0].Text
+		}
+		/*
+			for _, comment := range comments {
+				tag := tagFromComment(comment.Text)
+				if tag == "" {
+					continue
+				}
+
+				// if strings.Contains(comment.Text, "inject_tag") {
+				// 	log.Printf("warn: deprecated 'inject_tag' used")
+				// }
+
+				//messageFields = append(messageFields, area)
+				log.Println(tag)
+			}
+		*/
+
+		//--------------------------------------------------
 
 		// 基本类型处理
 		if fieldType, ok := field.Type.(*ast.Ident); ok {
